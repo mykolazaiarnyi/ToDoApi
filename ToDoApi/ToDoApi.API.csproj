@@ -17,8 +17,4 @@
     <ProjectReference Include="..\ToDoApi.Infrastructure\ToDoApi.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

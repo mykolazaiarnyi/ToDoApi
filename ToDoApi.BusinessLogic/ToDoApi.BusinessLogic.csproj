@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Implementation\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ToDoApi.Domain\ToDoApi.Domain.csproj" />
   </ItemGroup>
 

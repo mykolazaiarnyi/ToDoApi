@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ToDoApi.Domain;
 
 namespace ToDoApi.BusinessLogic.Interfaces
 {
-    internal interface IToDoService
+    public interface IToDoService
     {
+        Task<ToDoItem> CreateItemAsync(ToDoItem item);
+        Task<IEnumerable<ToDoItem>> GetAllItemsAsync();
+        Task<IEnumerable<ToDoItem>> GetAllDoneItemsAsync();
     }
 }
