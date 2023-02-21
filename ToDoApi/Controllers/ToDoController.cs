@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoApi.BusinessLogic.Interfaces;
+using ToDoApi.BusinessLogic.Models;
 using ToDoApi.Domain;
 
 namespace ToDoApi.API.Controllers
@@ -16,9 +17,9 @@ namespace ToDoApi.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ToDoItem>> CreateItemAsync(ToDoItem item)
+        public async Task<ActionResult<ToDoItem>> CreateItemAsync(CreateItemDto itemDto)
         {
-            var createdItem = await _service.CreateItemAsync(item);
+            var createdItem = await _service.CreateItemAsync(itemDto);
             return Ok(createdItem);
         }
 
@@ -34,10 +35,17 @@ namespace ToDoApi.API.Controllers
             return Ok(await _service.GetAllDoneItemsAsync());
         }
 
-        [HttpPut]
+        [HttpPut("{itemId}")]
         public async Task<ActionResult> ChangeStatusAsync(Guid itemId, bool isDone)
         {
             await _service.ChangeStatusAsync(itemId, isDone);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> ChangeStatusAsync(UpdateItemDto itemDto)
+        {
+            await _service.UpdateItemAsync(itemDto);
             return Ok();
         }
     }

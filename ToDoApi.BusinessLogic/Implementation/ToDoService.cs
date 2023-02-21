@@ -1,4 +1,5 @@
 ﻿using ToDoApi.BusinessLogic.Interfaces;
+using ToDoApi.BusinessLogic.Models;
 using ToDoApi.Domain;
 
 namespace ToDoApi.BusinessLogic.Implementation
@@ -12,9 +13,14 @@ namespace ToDoApi.BusinessLogic.Implementation
             _repository = repository;
         }
 
-        public async Task<ToDoItem> CreateItemAsync(ToDoItem item)
+        public async Task<ToDoItem> CreateItemAsync(CreateItemDto itemDto)
         {
-            item.Id = Guid.NewGuid();
+            var item = new ToDoItem
+            {
+                Id = Guid.NewGuid(),
+                Description = itemDto.Description,
+                IsDone = false
+            };
             await _repository.AddAsync(item);
             return item;
         }
@@ -35,6 +41,17 @@ namespace ToDoApi.BusinessLogic.Implementation
             var item = items.FirstOrDefault(x => x.Id == itemId);
 
             item.IsDone = isDone;
+
+            await _repository.UpdateAsync(item);
+        }
+
+        public async Task UpdateItemAsync(UpdateItemDto itemDto)
+        {
+            var items = await _repository.GetAllItemsAsync();
+            var item = items.FirstOrDefault(x => x.Id == itemDto.Id);
+
+            item.IsDone = itemDto.IsDone;
+            item.Description = itemDto.Description;
 
             await _repository.UpdateAsync(item);
         }
