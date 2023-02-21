@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ToDoApi.BusinessLogic.Interfaces;
 using ToDoApi.Domain;
 
@@ -33,6 +32,13 @@ namespace ToDoApi.API.Controllers
         public async Task<ActionResult<IEnumerable<ToDoItem>>> GetAllDoneItemsAsync()
         {
             return Ok(await _service.GetAllDoneItemsAsync());
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> ChangeStatusAsync(Guid itemId, bool isDone)
+        {
+            await _service.ChangeStatusAsync(itemId, isDone);
+            return Ok();
         }
     }
 }

@@ -7,5 +7,6 @@ namespace ToDoApi.BusinessLogic.Interfaces
         Task<ToDoItem> CreateItemAsync(ToDoItem item);
         Task<IEnumerable<ToDoItem>> GetAllItemsAsync();
         Task<IEnumerable<ToDoItem>> GetAllDoneItemsAsync();
+        Task ChangeStatusAsync(Guid itemId, bool isDone);
     }
 }

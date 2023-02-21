@@ -7,5 +7,6 @@ namespace ToDoApi.BusinessLogic.Interfaces
         Task AddAsync(ToDoItem item);
         Task<IEnumerable<ToDoItem>> GetAllItemsAsync();
         Task<IEnumerable<ToDoItem>> GetAllDoneItemsAsync();
+        Task UpdateAsync(ToDoItem item);
     }
 }

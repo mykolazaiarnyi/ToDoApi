@@ -28,5 +28,15 @@ namespace ToDoApi.BusinessLogic.Implementation
         {
             return await _repository.GetAllItemsAsync();
         }
+
+        public async Task ChangeStatusAsync(Guid itemId, bool isDone)
+        {
+            var items = await _repository.GetAllItemsAsync();
+            var item = items.FirstOrDefault(x => x.Id == itemId);
+
+            item.IsDone = isDone;
+
+            await _repository.UpdateAsync(item);
+        }
     }
 }

@@ -7,38 +7,45 @@ namespace ToDoApi.Infrastructure.Repositories
 {
     public class ToDoRepository : IToDoRepository
     {
-        private static readonly Guid UserId = new Guid("8360e917-5e1d-44c7-a449-e115b69280bb");
         private readonly ToDoContext _context;
+        private readonly IUserService _userService;
 
-        public ToDoRepository(ToDoContext context)
+        public ToDoRepository(ToDoContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         public async Task AddAsync(ToDoItem item)
         {
-            var user = await GetUserAsync();
+            var userId = _userService.CurrentUserId;
+            
+            var user = await _context.Users.FirstAsync(x => x.Id.Equals(userId));
+            user.ToDoItems ??= new List<ToDoItem>();
+            
             user.ToDoItems.Add(item);
+            
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<ToDoItem>> GetAllDoneItemsAsync()
         {
-            var user = await GetUserAsync();
-            return user.ToDoItems.Where(x => x.IsDone);
+            var allItems = await GetAllItemsAsync();
+            return allItems.Where(x => x.IsDone).ToList();
         }
 
         public async Task<IEnumerable<ToDoItem>> GetAllItemsAsync()
         {
-            var user = await GetUserAsync();
+            var userId = _userService.CurrentUserId;
+
+            var user = await _context.Users.FirstAsync(x => x.Id == userId);
+
             return user.ToDoItems;
         }
 
-        private async Task<User> GetUserAsync()
+        public async Task UpdateAsync(ToDoItem item)
         {
-            var user = await _context.Users.FirstAsync(x => x.Id.Equals(UserId));
-            user.ToDoItems ??= new List<ToDoItem>();
-            return user;
+            await _context.SaveChangesAsync();
         }
     }
 }
