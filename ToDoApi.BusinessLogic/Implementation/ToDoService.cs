@@ -1,4 +1,5 @@
-﻿using ToDoApi.BusinessLogic.Interfaces;
+﻿using ToDoApi.BusinessLogic.Exceptions;
+using ToDoApi.BusinessLogic.Interfaces;
 using ToDoApi.BusinessLogic.Models;
 using ToDoApi.Domain;
 
@@ -49,6 +50,11 @@ namespace ToDoApi.BusinessLogic.Implementation
         {
             var items = await _repository.GetAllItemsAsync();
             var item = items.FirstOrDefault(x => x.Id == itemDto.Id);
+
+            if (item is null)
+            {
+                throw new ToDoItemNotFoundException();
+            }
 
             item.IsDone = itemDto.IsDone;
             item.Description = itemDto.Description;
