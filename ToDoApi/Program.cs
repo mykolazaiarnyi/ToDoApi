@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoApi.API.Helpers;
+using ToDoApi.API.Middlewares;
 using ToDoApi.BusinessLogic.Implementation;
 using ToDoApi.BusinessLogic.Interfaces;
 using ToDoApi.Infrastructure.Data;
@@ -31,6 +32,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

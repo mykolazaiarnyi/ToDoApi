@@ -38,8 +38,7 @@ namespace ToDoApi.BusinessLogic.Implementation
 
         public async Task ChangeStatusAsync(Guid itemId, bool isDone)
         {
-            var items = await _repository.GetAllItemsAsync();
-            var item = items.FirstOrDefault(x => x.Id == itemId);
+            var item = await _repository.GetByIdAsync(itemId);
 
             item.IsDone = isDone;
 
@@ -48,8 +47,7 @@ namespace ToDoApi.BusinessLogic.Implementation
 
         public async Task UpdateItemAsync(UpdateItemDto itemDto)
         {
-            var items = await _repository.GetAllItemsAsync();
-            var item = items.FirstOrDefault(x => x.Id == itemDto.Id);
+            var item = await _repository.GetByIdAsync(itemDto.Id);
 
             if (item is null)
             {

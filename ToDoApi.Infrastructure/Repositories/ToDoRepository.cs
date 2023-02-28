@@ -43,6 +43,12 @@ namespace ToDoApi.Infrastructure.Repositories
             return user.ToDoItems;
         }
 
+        public async Task<ToDoItem> GetByIdAsync(Guid Id)
+        {
+            var items = await GetAllItemsAsync();
+            return items.FirstOrDefault(x => x.Id == Id);
+        }
+
         public async Task UpdateAsync(ToDoItem item)
         {
             await _context.SaveChangesAsync();
