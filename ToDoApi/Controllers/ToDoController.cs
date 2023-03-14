@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToDoApi.BusinessLogic.Interfaces;
 using ToDoApi.BusinessLogic.Models;
 using ToDoApi.Domain;
 
 namespace ToDoApi.API.Controllers
 {
+    [Authorize]
     [Route("api/to-do-items")]
     [ApiController]
     public class ToDoController : ControllerBase
