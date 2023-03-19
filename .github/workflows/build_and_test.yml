@@ -30,4 +30,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --verbosity normal
