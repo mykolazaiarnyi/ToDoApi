@@ -7,6 +7,7 @@ namespace ToDoApi.API.Tests.Validators
     public class CreateUserDtoValidatorTests
     {
         [Theory]
+        [InlineData(null)]
         [InlineData("123")]
         [InlineData("abc")]
         [InlineData("...")]
