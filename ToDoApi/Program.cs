@@ -1,9 +1,11 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using ToDoApi.API.Middlewares;
+using ToDoApi.API.Validators;
 using ToDoApi.BusinessLogic.Implementation;
 using ToDoApi.BusinessLogic.Interfaces;
 using ToDoApi.Infrastructure.Authentication;
@@ -14,7 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddFluentValidation(c => c.RegisterValidatorsFromAssemblyContaining<CreateItemDtoValidator>());
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
